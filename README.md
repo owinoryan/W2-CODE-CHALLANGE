@@ -54,9 +54,7 @@ Clears the input field, saves to local storage, and re-renders the list.
 clearButton Event Listener
 
 Clears the items array, saves to local storage, and re-renders the list.
+
+
 saveToLocalStorage()
-
-Saves the items array as a JSON string in local storage.
-loadFromLocalStorage()
-
 Loads the items from local storage when the page is first loaded.

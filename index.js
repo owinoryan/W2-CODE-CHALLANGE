@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //we declare html elements for later interaction with them
     const itemInput = document.getElementById('item-input');
     const addButton = document.getElementById('add-button');
     const shoppingList = document.getElementById('shopping-list');
@@ -7,16 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let items = [];
 
-    // FThis fuction renders the list
+    // This function renders the list
     function renderList() {
         shoppingList.innerHTML = '';
         items.forEach((item, index) => {
             const li = document.createElement('li');
             li.textContent = item.name;
-            li.classList.toggle('bought', item.bought);
+            li.classList.toggle('purchased', item.purchased);
 
+            // Mark item as purchased on click
             li.addEventListener('click', () => {
-                items[index].bought = !items[index].bought;
+                items[index].purchased = !items[index].purchased;
                 saveToLocalStorage();
                 renderList();
             });
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // This fuction adds a new item
+    // This function adds a new item
     addButton.addEventListener('click', () => {
         const itemName = itemInput.value.trim();
         if (itemName !== '') {
@@ -49,29 +49,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // This fuction clears the list
+    // This function clears the list
     clearButton.addEventListener('click', () => {
         items = [];
         saveToLocalStorage();
         renderList();
     });
 
-
-    
-     //This fuction saves items to local storage
+    // This function saves items to local storage
     function saveToLocalStorage() {
-       localStorage.setItem('shoppingList', JSON.stringify(items));
-   }
+        localStorage.setItem('itemCount', items.length);
+        items.forEach((item, index) => {
+            localStorage.setItem(`item_${index}_name`, item.name);
+            localStorage.setItem(`item_${index}_purchased`, item.purchased);
+        });
+    }
 
-     //This function loads items from local storage
+    // This function loads items from local storage
     function loadFromLocalStorage() {
-        const savedItems = localStorage.getItem('shoppingList');
-        if (savedItems) {
-            items = JSON.parse(savedItems);
+        const itemCount = parseInt(localStorage.getItem('itemCount'), 10) || 0;
+        items = [];
+        for (let i = 0; i < itemCount; i++) {
+            const name = localStorage.getItem(`item_${i}_name`);
+            const purchased = localStorage.getItem(`item_${i}_purchased`) === 'true';
+            if (name !== null) {
+                items.push({ name, purchased });
+            }
         }
     }
 
-    //Initial load from local storage and render
+    // Initial load from local storage and render
     loadFromLocalStorage();
     renderList();
 });

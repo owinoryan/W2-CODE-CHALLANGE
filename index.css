@@ -3,12 +3,24 @@ body{
     color: maroon;
     letter-spacing: 1px;
     margin: 20px;
-    background-image: url('images/christian-wiediger-Yep-psEeB9Y-unsplash\ \(1\).jpg');
+    /*background-image: url('images/christian-wiediger-Yep-psEeB9Y-unsplash\ \(1\).jpg');*/
     background-size: cover; /* Cover the entire page */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
 }
-
+.purchased {
+    text-decoration: line-through;
+    background-color: #d3d3d3; /* Light grey background */
+}
+.cover-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensure the image stays in the background */
+        }
 h1 {
     background-color: gray; 
     padding: 10px;
